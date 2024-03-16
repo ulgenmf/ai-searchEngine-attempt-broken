@@ -1,120 +1,110 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useController, useForm } from "react-hook-form";
-import {
- Form,
- FormControl,
- FormDescription,
- FormField,
- FormItem,
- FormLabel,
- FormMessage,
-
-} from "@/components/ui/form";
-import { useChat } from "ai/react";
-import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import { useActions, useUIState } from "ai/rsc";
+import { useRef, useState } from "react";
 import { Button } from "../ui/button";
-import { Textarea } from "../ui/textarea";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { z } from "zod";
-import { toast } from "../ui/use-toast";
-const FormSchema = z.object({
- input: z
-  .string()
-  .min(20, {
-   message: "Your message must be at least 20 characters long.",
-  })
-  .max(500, {
-   message: "Your message cannot exceed 500 characters.",
-  }),
-});
+
+import { AI } from "@/app/action";
+
+import { useEnterSubmit } from "@/lib/hooks/use-enter-submit";
+import { IconArrowElbow, IconPlus } from "../ui/icons";
+
+import Textarea from "react-textarea-autosize";
+import {
+ Tooltip,
+ TooltipContent,
+ TooltipProvider,
+ TooltipTrigger,
+} from "../ui/tooltip";
+import ToolBar from "../ui/toolbar";
+
 export default function Chat() {
+ const [messages, setMessages] = useUIState();
+ const [inputValue, setInputValue] = useState("");
+ const { submitUserMessage } = useActions<typeof AI>();
+ const { formRef, onKeyDown } = useEnterSubmit();
 
- const {
-  messages,
-  input,
-  handleInputChange,
-  handleSubmit,
- } = useChat({
-  api: "api/chat",
- });
+ const inputRef = useRef<HTMLTextAreaElement>(null);
 
- const form = useForm<z.infer<typeof FormSchema>>({
-  resolver: zodResolver(FormSchema),
- });
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  e.preventDefault();
+  // Add user message to UI state
+  setMessages((currentMessages: any) => [
+   ...currentMessages,
+   {
+    id: Date.now(),
+    display: <div>{inputValue}</div>,
+   },
+  ]);
 
- function onSubmit(data: z.infer<typeof FormSchema>) {
-  //@ts-ignore
-handleHandler
-  toast({
-   title: "You submitted the following values:",
-   description: (
-    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-     <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    </pre>
-   ),
-  });
+  // Submit and get response message
+  const responseMessage = await submitUserMessage(inputValue);
+  setMessages((currentMessages: any) => [...currentMessages, responseMessage]);
+
+  setInputValue("");
  }
-function submitEnder(){
-handleSubmit
-form.handleSubmit(onSubmit)}
 
- const count = form.watch("input");
- let counter = count ? count.length : 0;
- const isCountOverLimit = counter > 499;
  return (
-  <>
-   <div className="w-3/4 h-32 flex flex-col overflow-auto items-center justify-center rounded-md ">
-    {messages.map((m) => (
-     <div key={m.id}>
-      {m.role === "user" ? "User: " : "AI: "}
-      {m.content}
-     </div>
-    ))}
-   </div>
-   <Form {...form}>
-    <form onSubmit={form.handleSubmit()} className="w-3/5 relative">
-     <FormField
-onChange={submitEnder}
-      name="input"
-      control={form.control}
-      render={({ field }) => (
-       <FormItem>
-        <FormControl>
-         <Textarea
-          maxLength={500}
-          placeholder="Tell us a little bit about yourself"
-          className="resize-none scrollbar cursor-auto"
-          {...field}
-         />
-        </FormControl>
+  <div>
+   <div className="absolute inset-x-0 bottom-1 w-full  duration-300 ease-in-out animate-in dark:from-background/10 dark:from-10% dark:to-background/80 peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
+    <div className="mx-auto sm:max-w-2xl sm:px-1">
+     <form onSubmit={onSubmit} ref={formRef}>
+      <div className="flex flex-row gap-2  h-fit items-center justify-center border-2 px-2 py-4  rounded-md">
+       <div className="bg-green-300   relative">
+        <TooltipProvider>
+         <Tooltip>
+          <TooltipTrigger asChild>
+           <Button
+            variant="outline"
+            size="icon"
+            className=" rounded-full  sm:left-4"
+            onClick={(e) => {
+             e.preventDefault();
+             window.location.reload();
+            }}
+           >
+            <IconPlus />
+            <span className="sr-only">New Chat</span>
+           </Button>
+          </TooltipTrigger>
+          <TooltipContent>New Chat</TooltipContent>
+         </Tooltip>
+        </TooltipProvider>
+       </div>
+       <Textarea
+        ref={inputRef}
+        tabIndex={0}
+        onKeyDown={onKeyDown}
+        placeholder="Send a message."
+        className="w-full max-h-52 h-32 border scrollbar bg-transparent  border-gray-500 duration-200 rounded-md focus:border-lime-400 resize-none px-1 py-[1.3rem] focus-within:outline-none sm:text-sm"
+        autoFocus
+        spellCheck={false}
+        autoComplete="off"
+        autoCorrect="off"
+        name="message"
+        rows={1}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+       />
+       <div className=" items-center justify-center   transition-colors right-0 top-4 sm:right-4">
 
-        <FormDescription>
-         <p
-          className={
-           "text-end   mt-2 mr-1 right-0 text-sm " +
-           (isCountOverLimit
-            ? "text-red-500 animate-[pulse_1.5s_infinite] underline"
-            : "text-gray-200 ")
-          }
-         >
-          chars:{counter}
-         </p>{" "}
-         {isCountOverLimit && (
-          <p className=" text-red-500">
-           Your message cannot exceed 500 characters.
-          </p>
-         )}
-        </FormDescription>
-        <FormMessage />
-       </FormItem>
-      )}
-     />
-     <Button type="submit"> asdsa</Button>
-    </form>
-   </Form>
-  </>
+        <ToolBar classNames="grid grid-flow-col  grid-cols-3 grid-rows-2 items-center justify-center " />
+       </div>
+      </div>
+     </form>
+    </div>
+   </div>
+  </div>
  );
 }
+
+// <TooltipProvider>
+//          <Tooltip>
+//           <TooltipTrigger asChild>
+//            <Button type="submit" size="icon" disabled={inputValue === ""}>
+//             <IconArrowElbow />
+//             <span className="sr-only">Send message</span>
+//            </Button>
+//           </TooltipTrigger>
+//           <TooltipContent>Send message</TooltipContent>
+//          </Tooltip>
+//         </TooltipProvider>

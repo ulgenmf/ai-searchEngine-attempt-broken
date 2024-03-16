@@ -41,11 +41,10 @@ export const SparklesCore = (props: ParticlesProps) => {
 
   const particlesLoaded = async (container?: Container) => {
     if (container) {
-      console.log(container);
       controls.start({
         opacity: 1,
         transition: {
-          duration: 1,
+          duration: 0.2,
         },
       });
     }
@@ -62,11 +61,11 @@ export const SparklesCore = (props: ParticlesProps) => {
             background: {
               color: {
                 value: background || "#B106A6",
-                
+
               },
             },
             fullScreen: {
-              enable: false,
+              enable: true,
               zIndex: 1,
             },
 
@@ -78,17 +77,17 @@ export const SparklesCore = (props: ParticlesProps) => {
                   mode: "push",
                 },
                 onHover: {
-                  enable: false,
+                  enable: true,
                   mode: "repulse",
                 },
                 resize: true as any,
               },
               modes: {
                 push: {
-                  quantity: 4,
+                  quantity: 1,
                 },
                 repulse: {
-                  distance: 200,
+                  distance: 50,
                   duration: 0.4,
                 },
               },

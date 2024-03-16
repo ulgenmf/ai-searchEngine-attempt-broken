@@ -1,47 +1,72 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
 
-// Define the Cat interface
-interface Cat {
- id: string;
- name: string;
- description: string;
- image: {
-    url: string;
+export default function Test() {
+ const [searchTerm, setSearchTerm] = useState("");
+ const [imageK, setImageK] = useState<string | null>(null); // Store the image file
+ const [imageD, setImaged] = useState(null);
+
+ const handleImageChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+   const reader = new FileReader();
+   reader.onloadend = () => {
+    setImageK(reader.result as string); // Store as Base64 string
+   };
+   reader.readAsDataURL(file);
+  }
  };
-}
 
-const Test: React.FC = () => {
- const [cats, setCats] = useState<Cat[]>([]);
+ const handleSubmit = async (event) => {
+  event.preventDefault();
 
- useEffect(() => {
-    const fetchCats = async () => {
-      const response = await axios.get<Cat[]>('https://api.thecatapi.com/v1/breeds');
-      setCats(response.data);
-    };
+  // Prepare image data if it exists
 
-    fetchCats();
- }, []);
+  console.log(imageK);
+  const response = await fetch(`/api/image`, {
+   method: "POST",
+
+   body: JSON.stringify({ searchTerm, imageK }), // Include imageData if present
+  });
+
+  if (!response.ok) {
+   // Handle error response
+   console.error("API request failed:", response.status);
+   // You might want to show an error message to the user here
+   return;
+  }
+
+  // Assuming the response is JSON, parse it
+  const data = await response.json();
+
+  // Use the data as needed
+  console.log(data);
+  // For example, you might want to update the state or display the data in the UI
+ };
 
  return (
-    <div>
-      <h1>Cats</h1>
-      <ul>
-        {cats.map((cat) => (
-          <li key={cat.id}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img src={cat.image.url} alt={cat.name} style={{ width: '100px' }} />
-              <div style={{ marginLeft: '10px' }}>
-                <h3>{cat.name}</h3>
-                <p>{cat.description}</p>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+  <form onSubmit={handleSubmit}>
+   <input type="file" onChange={handleImageChange} />
+   {/*<img src={imageK} alt="" />*/}
+   <input
+    type="text"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+   />
+   <pre className="TEX">{JSON.stringify(imageD, null, 2)}</pre>
+   <button type="submit">Search</button>
+  </form>
  );
-};
+}
 
-export default Test;
+//   body: JSON.stringify({ searchTerm }),
+//  });
+////  console.log(response.body);
+//  if (!response.ok) {
+//   console.error("API request failed:", response.status);
+//   // Handle the error here
+//   return;
+//  }
+
+//  const data = await response.json();
+//  console.log(data);
+// };

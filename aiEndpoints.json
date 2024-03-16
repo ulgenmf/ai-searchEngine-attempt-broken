@@ -1,0 +1,53 @@
+{
+ "chat": {
+  "model": {
+   "provider": "openai",
+   "apiQuery": "https://api.openai.com/v1/engines/davinci-codex/completions",
+   "pricing": {
+    "input": {
+     "cost": 1
+    },
+    "output": {
+     "cost": 2,
+     "maxLength": 4000
+    }
+   },
+   "sendMessage": "/api/ai/chat/send",
+   "getHistory": null
+  }
+ },
+ "imageProcessing": {
+  "model": {
+   "provider": "openai",
+   "apiQuery": "https://api.openai.com/v1/engines/davinci-codex/completions",
+   "pricing": {
+    "input": {
+     "cost": 1
+    },
+    "output": {
+     "cost": 2,
+     "maxLength": 4000
+    }
+   },
+   "analyzeImage": "/api/ai/image/analyze",
+   "enhanceImage": "/api/ai/image/enhance"
+  }
+ },
+ "textAnalysis": {
+  "model": {
+   "provider": "openai",
+   "apiQuery": "https://api.openai.com/v1/engines/davinci-codex/completions",
+   "pricing": {
+    "input": {
+     "cost": 1
+    },
+    "output": {
+     "cost": 2,
+     "maxLength": 4000
+    }
+   },
+   "sentimentAnalysis": "/api/ai/text/sentiment",
+   "summarizeText": "/api/ai/text/summarize"
+  }
+ }
+}

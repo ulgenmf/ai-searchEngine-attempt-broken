@@ -1,4 +1,15 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+ images: {
+ remotePatterns: [
+  {
+  protocol: 'https',
+  hostname: "images.unsplash.com",
+  port: '*', // Allow both default HTTP (80) and HTTPS (443) ports
+  pathname: '/*/**',
+  },
+],
+ },
+};
 
 export default nextConfig;
