@@ -16,37 +16,37 @@ export const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
 
 
 
-export async function customFetch({
-	method = 'POST',
-	endpoint,
-	body,
-	contentType = 'application/json',
-respons
-}: {
-	method?: string;
-	endpoint: string;
-	body: any;
-	contentType?: string;
-}) {
-	try {
-		const response = await fetch(endpoint, {
-			method: method,
-			headers: {
-				'Content-Type': contentType,
-			},
-			body: body,
-		});
+//export async function customFetch({
+//	method = 'POST',
+//	endpoint,
+//	body,
+//	contentType = 'application/json',
+//	respons
+//}: {
+//	method?: string;
+//	endpoint: string;
+//	body: any;
+//	contentType?: string;
+//}) {
+//	try {
+//		const response = await fetch(endpoint, {
+//			method: method,
+//			headers: {
+//				'Content-Type': contentType,
+//			},
+//			body: body,
+//		});
 
-		if (!response.ok) {
-			console.log(response.status)
-			throw new Error('Network response was not ok');
-		}
+//		if (!response.ok) {
+//			console.log(response.status)
+//			throw new Error('Network response was not ok');
+//		}
 
-		const data = await response.json();
-		console.log(data)
-		return data;
-	} catch (error) {
-		console.error('Error:', error);
-		throw error; // Re-throw the error to be handled by the caller
-	}
-}
+//		const data = await response.json();
+//		console.log(data)
+//		return data;
+//	} catch (error) {
+//		console.error('Error:', error);
+//		throw error; // Re-throw the error to be handled by the caller
+//	}
+//}
