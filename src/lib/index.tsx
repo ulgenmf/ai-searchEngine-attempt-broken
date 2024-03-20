@@ -4,7 +4,6 @@ import zodToJsonSchema from "zod-to-json-schema";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
-import { customFetch } from "@/lib/utils";
 
 const consumeStream = async (stream: ReadableStream) => {
  const reader = stream.getReader();

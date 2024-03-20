@@ -4,7 +4,7 @@ import { MicIcon, PauseCircle } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
 
-function RecordingField({ children }: { children: React.ReactNode }) {
+function RecordingField({ children }: { children?: React.ReactNode }) {
  const { isRecording, isRecordingComplete, transcript, handleToggleRecording } =
   useSpeechRecognition();
 

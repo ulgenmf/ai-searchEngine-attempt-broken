@@ -45,8 +45,7 @@ export default function Tts() {
    },
   ]);
 
-function countHandler(){
-}
+  function countHandler() {}
 
   // Submit and get response message
   const responseMessage = await submitUserMessage(inputValue);
