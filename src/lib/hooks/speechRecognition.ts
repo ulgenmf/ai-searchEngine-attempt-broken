@@ -1,6 +1,5 @@
-import { useVelocity } from "framer-motion";
 import { atom, useAtom } from "jotai";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 // Declare a global interface to add the webkitSpeechRecognition property to the Window object
 declare global {
@@ -20,6 +19,7 @@ const useSpeechRecognition = () => {
 	const startRecording = () => {
 		recognitionRef.current = new window.webkitSpeechRecognition();
 		recognitionRef.current.continuous = true;
+		recognitionRef.current.lang= 'tr-TR';
 		recognitionRef.current.interimResults = true;
 
 		recognitionRef.current.onresult = (event: any) => {

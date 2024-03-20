@@ -1,19 +1,22 @@
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "@/components/external-link";
 import { IconArrowRight } from "@/components/ui/icons";
-import { SparklesPreview } from "./welcome/welcomeText";
 
 const exampleMessages = [
  {
-  heading: "What are the trending stocks?",
+  heading: "Start a  VIDEO   chat",
+  message: "I'd like to buy 10 shares of MSFT",
+ },
+ {
+  heading: "Start a   VOICE chat",
   message: "What are the trending stocks?",
  },
  {
-  heading: "What's the stock price of AAPL?",
+  heading: "Simply ask: What does generative AI  mean?",
   message: "What's the stock price of AAPL?",
  },
+
  {
-  heading: "I'd like to buy 10 shares of MSFT",
+  heading: "Give me a task",
   message: "I'd like to buy 10 shares of MSFT",
  },
 ];
@@ -21,31 +24,19 @@ const exampleMessages = [
 export function EmptyScreen() {
  return (
   <div className="mx-auto z-60 max-w-2xl  px-4">
-  {/*<SparklesPreview />*/}
-   <div className="rounded-lg border bg-red-900  p-8 mb-4">
+   {/*<SparklesPreview />*/}
+   <div className="rounded-lg border bg-white bg-opacity-5 p-8 mb-4">
     <h1 className="mb-2 text-lg font-semibold">
-     Welcome to AI SDK 3.0 Generative UI demo!
+     Struggling to Find the Right AI Tool?{" "}
     </h1>
+
     <p className="mb-2 leading-normal text-muted-foreground">
-     This is a demo of an interactive financial assistant. It can show you
-     stocks, tell you their prices, and even help you buy shares.
-    </p>
-    <p className="mb-2 leading-normal text-muted-foreground">
-     The demo is built with{" "}
-     <ExternalLink href="https://nextjs.org">Next.js</ExternalLink> and the{" "}
-     <ExternalLink href="https://sdk.vercel.ai/docs">
-      Vercel AI SDK
-     </ExternalLink>
-     .
-    </p>
-    <p className="mb-2 leading-normal text-muted-foreground">
-     It uses{" "}
-     <ExternalLink href="https://vercel.com/blog/ai-sdk-3-generative-ui">
-      React Server Components
-     </ExternalLink>{" "}
-     to combine text with UI generated as output of the LLM. The UI state is
-     synced through the SDK so the model is aware of your interactions as they
-     happen.
+     This project complex information: Easily grasp complex concepts through
+     text summarization, multimedia integration, and adaptable presentation.
+     Emotional intelligence: Our AI understands your needs and responds with
+     empathy, personalizing the experience. Open-ended exploration: Dont be
+     limited by rigid formats. Ask complex questions, delve deeper into topics,
+     and foster a true understanding of information.
     </p>
     <p className="leading-normal text-muted-foreground">Try an example:</p>
     <div className="mt-4 flex flex-col items-start space-y-2 mb-4">

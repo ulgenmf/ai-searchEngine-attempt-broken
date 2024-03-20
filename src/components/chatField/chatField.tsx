@@ -49,7 +49,7 @@ export default function Chat() {
     <div className="mx-auto sm:max-w-2xl sm:px-1">
      <form onSubmit={onSubmit} ref={formRef}>
       <div className="flex flex-row gap-2  h-fit items-center justify-center border-2 px-2 py-4  rounded-md">
-       <div className="bg-green-300   relative">
+       <div className="  relative">
         <TooltipProvider>
          <Tooltip>
           <TooltipTrigger asChild>
