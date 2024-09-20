@@ -3,7 +3,7 @@ import { Groq } from "groq-sdk";
 
 const groq = new Groq({
 	dangerouslyAllowBrowser: true,
-	apiKey: "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",
+	apiKey: "",
 });
 
 export async function POST(request: Request, response: Response) {
@@ -13,7 +13,7 @@ export async function POST(request: Request, response: Response) {
 	const url = "https://tts.verbatik.com/api/v1/tts";
 	const headers = {
 		"Content-Type": "application/ssml+xml",
-		Authorization: "Bearer $2y$10$s1j7fhdjh80Q2X14CR9aJu/Zr4AiA2KlzV3hiyhni.JDS6GX4KV7C",
+		Authorization: "",
 	};
 
 	try {
